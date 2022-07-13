@@ -168,6 +168,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) { //would be dope asf. 
 			var cervix = luaFile + ".lua";
 			var doPush = false;
+			#if MODS_ALLOWED
 			if(FileSystem.exists(Paths.modFolders(cervix))) {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
@@ -196,12 +197,14 @@ class FunkinLua {
 			}
 			luaTrace("Script doesn't exist!");
 		});
-
+                #end
+		#end
 		//stuff 4 noobz like you B)
 		
 		PlayState.instance.callOnLuas('onLoaded', []);
 		
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String) {//would be dope asf. 
+		#if MODS_ALLOWED
 		var cervix = luaFile + ".lua";
 			var doPush = false;
 		if(FileSystem.exists(Paths.modFolders(cervix))) {
@@ -1008,6 +1011,7 @@ class FunkinLua {
 			return false;
 		});
 		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, music:String = null) {
+			#if MODS_ALLOWED
 			var path:String = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 			if(!FileSystem.exists(path)) {
 				path = SUtil.getPath() + Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
@@ -1031,6 +1035,7 @@ class FunkinLua {
 				}
 			}
 		});
+		#end
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
 			if(FileSystem.exists(Paths.video(videoFile))) {
