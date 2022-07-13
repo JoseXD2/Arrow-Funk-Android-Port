@@ -6,7 +6,7 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
 import flixel.FlxSprite;
-#if MODS_ALLOWED
+#if sys
 import sys.io.File;
 import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
@@ -139,7 +139,7 @@ class Paths
 			return file;
 		}
 		#end
-		return 'assets/videos/$key.$VIDEO_EXT';
+		return SUtil.getPath() + 'assets/videos/$key.$VIDEO_EXT';
 	}
 
 	static public function sound(key:String, ?library:String):Dynamic
@@ -226,20 +226,22 @@ class Paths
 		if (!ignoreMods && FileSystem.exists(mods(key)))
 			return File.getContent(mods(key));
 		#end
+			
+                if (FileSystem.exists(SUtil.getPath() + getPreloadPath(key)))
+			return File.getContent(SUtil.getPath() + getPreloadPath(key));
 
-		if (FileSystem.exists(getPreloadPath(key)))
-			return File.getContent(getPreloadPath(key));
+		
 
 		if (currentLevel != null)
 		{
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
-				levelPath = getLibraryPathForce(key, currentLevel);
+				levelPath = SUtil.getPath() + getLibraryPathForce(key, currentLevel);
 				if (FileSystem.exists(levelPath))
 					return File.getContent(levelPath);
 			}
 
-			levelPath = getLibraryPathForce(key, 'shared');
+			levelPath = SUtil.getPath() + getLibraryPathForce(key, 'shared');
 			if (FileSystem.exists(levelPath))
 				return File.getContent(levelPath);
 		}
@@ -249,7 +251,7 @@ class Paths
 
 	inline static public function font(key:String)
 	{
-		return 'assets/fonts/$key';
+		return SUtil.getPath() + 'assets/fonts/$key';
 	}
 
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
@@ -316,7 +318,7 @@ class Paths
 	}
 
 	inline static public function mods(key:String = '') {
-		return 'mods/' + key;
+		return SUtil.getPath() + 'mods/' + key;
 	}
 
 	inline static public function modsJson(key:String) {
@@ -358,7 +360,7 @@ class Paths
 				return fileToCheck;
 			}
 		}
-		return 'mods/' + key;
+		return SUtil.getPath() + 'mods/' + key;
 	}
 
 	static public function getModDirectories():Array<String> {
