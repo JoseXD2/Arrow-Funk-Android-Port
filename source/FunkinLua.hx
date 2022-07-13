@@ -215,7 +215,7 @@ class FunkinLua {
 				doPush = true;
 			}
 		}
-                #end
+                
 			if(doPush){ 
 			PlayState.instance.luaArray.push(new FunkinLua(cervix)); 
 			}else{
@@ -223,7 +223,7 @@ class FunkinLua {
 			
 				
 			}
-			
+			#end
 			
 			return null;
 		});
