@@ -9,7 +9,7 @@ import Controls;
 class ClientPrefs {
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
-	public static var showFPS:Bool = true;
+	public static var showFPS:Bool = #if android false #else true #end;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
@@ -27,6 +27,7 @@ class ClientPrefs {
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
+	public static var controllerMode:Bool = #if android true #else false #end;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'songspeed' => 1.0,
@@ -109,6 +110,7 @@ class ClientPrefs {
 		FlxG.save.data.goodWindow = goodWindow;
 		FlxG.save.data.badWindow = badWindow;
 		FlxG.save.data.safeFrames = safeFrames;
+		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 	
 		FlxG.save.flush();
@@ -210,6 +212,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.safeFrames != null) {
 			safeFrames = FlxG.save.data.safeFrames;
+		}
+		if(FlxG.save.data.controllerMode != null) {
+			controllerMode = FlxG.save.data.controllerMode;
 		}
 		if(FlxG.save.data.gameplaySettings != null)
 		{
