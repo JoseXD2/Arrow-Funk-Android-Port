@@ -168,6 +168,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) { //would be dope asf. 
 			var cervix = luaFile + ".lua";
 			var doPush = false;
+			#if MODS_ALLOWED
 			if(FileSystem.exists(Paths.modFolders(cervix))) {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
@@ -177,7 +178,7 @@ class FunkinLua {
 					doPush = true;
 				}
 			}
-
+                        #end
 			if(doPush)
 			{
 				if(!ignoreAlreadyRunning)
@@ -202,6 +203,7 @@ class FunkinLua {
 		PlayState.instance.callOnLuas('onLoaded', []);
 		
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String) {//would be dope asf. 
+		#if MODS_ALLOWED
 		var cervix = luaFile + ".lua";
 			var doPush = false;
 		if(FileSystem.exists(Paths.modFolders(cervix))) {
@@ -213,7 +215,7 @@ class FunkinLua {
 				doPush = true;
 			}
 		}
-
+                #end
 			if(doPush){ 
 			PlayState.instance.luaArray.push(new FunkinLua(cervix)); 
 			}else{
