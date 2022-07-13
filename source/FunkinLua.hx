@@ -1010,7 +1010,9 @@ class FunkinLua {
 			return false;
 		});
 		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, music:String = null) {
+			#if MODS_ALLOWED
 			var path:String = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
+			#end
 			if(!FileSystem.exists(path)) {
 				path = SUtil.getPath() + Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 			}
@@ -1276,9 +1278,9 @@ class FunkinLua {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
-
+                #if (desktop && LUA_ALLOWED)
 		Discord.DiscordClient.addLuaCallbacks(lua);
-
+                #end
 		call('onCreate', []);
 		#end
 	}
