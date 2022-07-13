@@ -184,7 +184,7 @@ class EditorLua {
 				return;
 			}
 		});
-
+                #if (desktop && LUA_ALLOWED)
 		Discord.DiscordClient.addLuaCallbacks(lua);
 
 		call('onCreate', []);
