@@ -228,6 +228,7 @@ class FunkinLua {
 			
 			return null;
 		});
+		#end
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
